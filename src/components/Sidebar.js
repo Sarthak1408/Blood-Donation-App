@@ -11,7 +11,7 @@ const Sidebar = ({ activeTab, setActiveTab, sidebarItems }) => (
           <Heart className="w-5 md:w-6 h-5 md:h-6 text-white" />
         </div>
         <div>
-          <h1 className="text-lg md:text-xl font-bold text-gray-800">LifeFlow</h1>
+          <h1 className="text-lg md:text-xl font-bold text-gray-800">Kabir Gyan Mandir</h1>
           <p className="text-xs md:text-sm text-gray-500">Blood Donation Camp</p>
         </div>
       </div>

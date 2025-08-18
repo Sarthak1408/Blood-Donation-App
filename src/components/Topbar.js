@@ -42,7 +42,7 @@ const Topbar = ({ onSidebarOpen }) => {
         <div className="w-7 h-7 sm:w-9 sm:h-9 bg-red-100 rounded-full flex items-center justify-center text-red-500 text-lg sm:text-xl font-bold">
           {/* LOGO */}
         </div>
-        <span className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-800 tracking-wide">LifeFlow</span>
+        <span className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-800 tracking-wide">Blood Donation</span>
       </div>
       {/* Total Donors Counter - right */}
       <div className="flex items-center">

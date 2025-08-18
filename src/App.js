@@ -16,7 +16,6 @@ const App = () => {
 
   const [formData, setFormData] = useState({
     name: '',
-    age: '',
     bloodType: '',
     phone: '',
     gender: '',
@@ -40,7 +39,7 @@ const App = () => {
   };
 
   const handleSubmit = async () => {
-    if (!formData.name || !formData.age || !formData.bloodType || !formData.phone || !formData.address || !formData.gender) {
+    if (!formData.name || !formData.bloodType || !formData.phone || !formData.address || !formData.gender) {
       alert('Please fill in all required fields');
       return;
     }
@@ -48,7 +47,6 @@ const App = () => {
     // Prepare data for Supabase
     const donorData = {
       name: formData.name,
-      age: parseInt(formData.age),
       blood_type: formData.bloodType,
       phone_number: parseInt(formData.phone.replace(/\D/g, '')),
       address: formData.address,
@@ -70,13 +68,13 @@ const App = () => {
     const newDonor = {
       id: data && data[0] && data[0].id ? data[0].id : donors.length + 1,
       ...formData,
-      age: parseInt(formData.age),
+
       date: new Date().toISOString().split('T')[0]
     };
     setDonors([...donors, newDonor]);
     setFormData({
       name: '',
-      age: '',
+
       bloodType: '',
       phone: '',
       gender: '',
