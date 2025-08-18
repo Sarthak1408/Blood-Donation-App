@@ -10,6 +10,7 @@ import Settings from './components/Settings';
 import { supabase } from './supabaseClient';
 
 const App = () => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('dashboard');
   const [donors, setDonors] = useState([]);
 
@@ -116,15 +117,31 @@ const App = () => {
 
   return (
     <div className="flex h-screen bg-gray-100">
-      {/* Sidebar */}
-      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} sidebarItems={sidebarItems} />
+      {/* Sidebar - hidden on mobile unless open */}
+      <div className={`fixed inset-0 z-40 lg:relative lg:z-0 h-full ${sidebarOpen ? 'block' : 'hidden lg:block'}`}>
+        {/* Overlay - visible only on mobile */}
+        <div
+          className={`fixed inset-0 bg-black bg-opacity-30 transition-opacity duration-300 lg:hidden
+            ${sidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+          onClick={() => setSidebarOpen(false)}
+        ></div>
+        {/* Sidebar */}
+        <div
+          className={`fixed inset-y-0 left-0 w-64 bg-white shadow-xl transform transition-transform duration-300 lg:transform-none lg:relative h-screen lg:h-full
+            ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}
+        >
+          <Sidebar activeTab={activeTab} setActiveTab={tab => { setActiveTab(tab); setSidebarOpen(false); }} sidebarItems={sidebarItems} />
+        </div>
+      </div>
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col min-w-0">
         {/* Topbar */}
-        <Topbar activeTab={activeTab} totalDonors={stats.total} />
+        <Topbar onSidebarOpen={() => setSidebarOpen(true)} />
         {/* Main Area */}
-        <main className="flex-1 overflow-y-auto">
-          {renderMainContent()}
+        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50">
+          <div className="container mx-auto px-2 sm:px-4 lg:px-6 py-4">
+            {renderMainContent()}
+          </div>
         </main>
       </div>
     </div>
