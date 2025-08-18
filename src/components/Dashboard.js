@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Heart, Calendar, UserPlus } from 'lucide-react';
+import { Heart, UserPlus } from 'lucide-react';
 import { supabase } from '../supabaseClient';
 
 
@@ -9,14 +9,14 @@ const Dashboard = () => {
   // Calculate stats from donors
   const getStats = () => {
     const total = donors.length;
-    const todayStr = new Date().toISOString().split('T')[0];
-    const today = donors.filter(d => d.created_at && d.created_at.startsWith(todayStr)).length;
+    const male = donors.filter(d => d.gender === 'male').length;
+    const female = donors.filter(d => d.gender === 'female').length;
     const firstTime = donors.filter(d => d.isFirstTime).length;
     const bloodTypes = donors.reduce((acc, donor) => {
       acc[donor.blood_type] = (acc[donor.blood_type] || 0) + 1;
       return acc;
     }, {});
-    return { total, today, firstTime, bloodTypes };
+    return { total, male, female, firstTime, bloodTypes };
   };
   const stats = getStats();
 
@@ -61,21 +61,19 @@ const Dashboard = () => {
         <div className="bg-white rounded-lg shadow p-6 border-l-4 border-blue-500 stat-card">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Today's Donors</p>
-              <p className="text-3xl font-bold text-gray-900">{stats.today}</p>
+              <p className="text-sm font-medium text-gray-600">Male Donors</p>
+              <p className="text-3xl font-bold text-gray-900">{stats.male}</p>
             </div>
-            <Calendar className="w-10 h-10 text-blue-500" />
+            <span className="w-10 h-10 flex items-center justify-center text-blue-500 text-3xl">♂️</span>
           </div>
         </div>
-        <div className="bg-white rounded-lg shadow p-6 border-l-4 border-green-500 stat-card">
+        <div className="bg-white rounded-lg shadow p-6 border-l-4 border-pink-500 stat-card">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Blood Units</p>
-              <p className="text-3xl font-bold text-gray-900">{stats.total * 450}ml</p>
+              <p className="text-sm font-medium text-gray-600">Female Donors</p>
+              <p className="text-3xl font-bold text-gray-900">{stats.female}</p>
             </div>
-            <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
-              <span className="text-white font-bold">🩸</span>
-            </div>
+            <span className="w-10 h-10 flex items-center justify-center text-pink-500 text-3xl">♀️</span>
           </div>
         </div>
         <div className="bg-white rounded-lg shadow p-6 border-l-4 border-purple-500 stat-card">
@@ -107,20 +105,33 @@ const Dashboard = () => {
       <div className="bg-white rounded-lg shadow p-6">
         <h3 className="text-lg font-semibold text-gray-800 mb-4">Recent Donors</h3>
         <div className="space-y-3">
-          {donors.slice(0, 3).map(donor => (
-            <div key={donor.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
-                  <span className="text-red-600 font-bold text-sm">{donor.blood_type}</span>
+          {donors.slice(0, 3).map(donor => {
+            // Convert created_at (UTC) to IST and format as HH:MM using toLocaleString
+            let time = '';
+            if (donor.created_at) {
+              const utcDate = new Date(donor.created_at);
+              time = utcDate.toLocaleString('en-IN', {
+                timeZone: 'Asia/Kolkata',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+              });
+            }
+            return (
+              <div key={donor.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
+                    <span className="text-red-600 font-bold text-sm">{donor.blood_type}</span>
+                  </div>
+                  <div>
+                    <p className="font-medium text-gray-900">{donor.name}</p>
+                    <p className="text-sm text-gray-500">{donor.address}</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="font-medium text-gray-900">{donor.name}</p>
-                  <p className="text-sm text-gray-500">{donor.phone_number}</p>
-                </div>
+                <span className="text-sm text-gray-500">{time}</span>
               </div>
-              <span className="text-sm text-gray-500">{donor.created_at ? donor.created_at.split('T')[0] : ''}</span>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>

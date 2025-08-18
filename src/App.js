@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LayoutDashboard, UserPlus, Users } from 'lucide-react';
+import { LayoutDashboard, UserPlus, Users, Settings as SettingsIcon } from 'lucide-react';
 import './App.css';
 import Sidebar from './components/Sidebar';
 import Topbar from './components/Topbar';
@@ -11,48 +11,14 @@ import { supabase } from './supabaseClient';
 
 const App = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
-  const [donors, setDonors] = useState([
-    {
-      id: 1,
-      name: "John Doe",
-      age: 25,
-      bloodType: "A+",
-      phone: "+91-9876543210",
-      email: "john@example.com",
-      address: "123 Main St, Jamshedpur",
-      date: "2024-08-17",
-      isFirstTime: false
-    },
-    {
-      id: 2,
-      name: "Jane Smith",
-      age: 30,
-      bloodType: "O+",
-      phone: "+91-9876543211",
-      email: "jane@example.com",
-      address: "456 Oak Ave, Jamshedpur",
-      date: "2024-08-17",
-      isFirstTime: true
-    },
-    {
-      id: 3,
-      name: "Raj Kumar",
-      age: 28,
-      bloodType: "B+",
-      phone: "+91-9876543212",
-      email: "raj@example.com",
-      address: "789 Park Road, Jamshedpur",
-      date: "2024-08-16",
-      isFirstTime: false
-    }
-  ]);
+  const [donors, setDonors] = useState([]);
 
   const [formData, setFormData] = useState({
     name: '',
     age: '',
     bloodType: '',
     phone: '',
-    email: '',
+    gender: '',
     address: '',
     isFirstTime: false
   });
@@ -61,7 +27,7 @@ const App = () => {
     { id: 'dashboard', icon: LayoutDashboard, label: 'Dashboard' },
     { id: 'add-donor', icon: UserPlus, label: 'Add Donor' },
     { id: 'donor-list', icon: Users, label: 'Donor List' },
-    // { id: 'settings', icon: Settings, label: 'Settings' }
+  { id: 'settings', icon: SettingsIcon, label: 'Settings' }
   ];
 
   const handleInputChange = (e) => {
@@ -73,7 +39,7 @@ const App = () => {
   };
 
   const handleSubmit = async () => {
-    if (!formData.name || !formData.age || !formData.bloodType || !formData.phone || !formData.address) {
+    if (!formData.name || !formData.age || !formData.bloodType || !formData.phone || !formData.address || !formData.gender) {
       alert('Please fill in all required fields');
       return;
     }
@@ -85,7 +51,8 @@ const App = () => {
       blood_type: formData.bloodType,
       phone_number: parseInt(formData.phone.replace(/\D/g, '')),
       address: formData.address,
-      isFirstTime: formData.isFirstTime
+      isFirstTime: formData.isFirstTime,
+      gender: formData.gender
     };
 
     // Insert into Supabase
@@ -111,7 +78,7 @@ const App = () => {
       age: '',
       bloodType: '',
       phone: '',
-      email: '',
+      gender: '',
       address: '',
       isFirstTime: false
     });
@@ -126,7 +93,6 @@ const App = () => {
       acc[donor.bloodType] = (acc[donor.bloodType] || 0) + 1;
       return acc;
     }, {});
-    
     return { total, today, firstTime, bloodTypes };
   };
 
