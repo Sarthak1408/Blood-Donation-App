@@ -38,47 +38,12 @@ const AddDonor = ({ formData, handleInputChange, handleSubmit }) => {
               />
             </div>
 
-            {/* Blood Type and Phone Row */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Blood Type <span className="text-red-500">*</span>
-                </label>
-                <select
-                  name="blood_type"
-                  value={formData.blood_type}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all bg-white"
-                >
-                  <option value="">Select Blood Type</option>
-                  {['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'].map(type => (
-                    <option key={type} value={type}>{type}</option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Phone Number <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="tel"
-                  name="phone_number"
-                  value={formData.phone_number}
-                  onChange={handleInputChange}
-                  onBlur={handlePhoneBlur}
-                  maxLength="10"
-                  className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all"
-                  placeholder="Enter 10 digit Contact Number"
-                />
-              </div>
-            </div>
-
-            {/* Gender and Address Row */}
+            {/* Gender Selection */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Gender <span className="text-red-500">*</span>
               </label>
-              <div className="flex gap-6 mb-6">
+              <div className="flex gap-6">
                 <label className="inline-flex items-center">
                   <input
                     type="radio"
@@ -102,20 +67,56 @@ const AddDonor = ({ formData, handleInputChange, handleSubmit }) => {
                   <span className="ml-2 text-gray-700">Female</span>
                 </label>
               </div>
+            </div>
 
+            {/* Blood Type and Phone Row */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Address
+                  Blood Type <span className="text-red-500">*</span>
+                </label>
+                <select
+                  name="blood_type"
+                  value={formData.blood_type}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all bg-white"
+                >
+                  <option value="">Select Blood Type</option>
+                  {['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'].map(type => (
+                    <option key={type} value={type}>{type}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Contact Number <span className="text-red-500">*</span>
                 </label>
                 <input
-                  type="text"
-                  name="address"
-                  value={formData.address}
+                  type="tel"
+                  name="phone_number"
+                  value={formData.phone_number}
                   onChange={handleInputChange}
+                  onBlur={handlePhoneBlur}
+                  maxLength="10"
                   className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all"
-                  placeholder="Enter Address"
+                  placeholder="Enter 10 digit Contact Number"
                 />
               </div>
+            </div>
+
+            {/* Address */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Address <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                name="address"
+                value={formData.address}
+                onChange={handleInputChange}
+                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all"
+                placeholder="Enter Address"
+              />
             </div>
 
             {/* First Time Donor Checkbox */}

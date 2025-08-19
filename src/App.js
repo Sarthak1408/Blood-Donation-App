@@ -20,6 +20,62 @@ const App = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [donors, setDonors] = useState([]);
+  const [formData, setFormData] = useState({
+    name: '',
+    blood_type: '',
+    phone_number: '',
+    gender: '',
+    address: '',
+    isFirstTime: false
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value
+    }));
+  };
+
+  const handleSubmit = async () => {
+    if (!formData.name || !formData.blood_type || !formData.phone_number || !formData.address || !formData.gender) {
+      alert('Please fill in all required fields');
+      return;
+    }
+
+    // Prepare data for Supabase
+    const donorData = {
+      name: formData.name,
+      blood_type: formData.blood_type,
+      phone_number: parseInt(formData.phone_number.replace(/\D/g, '')),
+      address: formData.address,
+      isFirstTime: formData.isFirstTime,
+      gender: formData.gender
+    };
+
+    // Insert into Supabase
+    const { error } = await supabase
+      .from('donors')
+      .insert([donorData]);
+
+    if (error) {
+      alert('Error adding donor: ' + error.message);
+      return;
+    }
+
+    // Reset form
+    setFormData({
+      name: '',
+      blood_type: '',
+      phone_number: '',
+      gender: '',
+      address: '',
+      isFirstTime: false
+    });
+    
+    alert('Donor added successfully!');
+    setActiveTab('donor-list');
+  };
 
   // Fetch donors and subscribe to real-time updates
   useEffect(() => {
@@ -52,7 +108,7 @@ const App = () => {
       case 'dashboard':
         return <Dashboard donors={donors} />;
       case 'add-donor':
-        return <AddDonor />;
+        return <AddDonor formData={formData} handleInputChange={handleInputChange} handleSubmit={handleSubmit} />;
       case 'donor-list':
         return <DonorList donors={donors} />;
       case 'settings':
