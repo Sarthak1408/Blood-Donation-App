@@ -15,6 +15,10 @@ body {
 /* Tailwind CSS CDN Fallback */
 @import url('https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css');
 
+@import url('https://fonts.googleapis.com/css2?family=Yatra+One&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Arya:wght@400;700&family=Yatra+One&display=swap');
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
@@ -60,4 +64,30 @@ input:focus, select:focus, textarea:focus, button:focus {
   .no-print {
     display: none !important;
   }
+}
+
+.yatra-one-regular {
+  font-family: "Yatra One", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.text-outline {
+  text-shadow: 
+    -0.5px -0.5px 0 #000,  
+     0.5px -0.5px 0 #000,
+    -0.5px  0.5px 0 #000,
+     0.5px  0.5px 0 #000;
+}
+
+.arya-regular {
+  font-family: "Arya", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.arya-bold {
+  font-family: "Arya", sans-serif;
+  font-weight: 700;
+  font-style: normal;
 }

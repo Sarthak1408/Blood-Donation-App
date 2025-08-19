@@ -31,23 +31,29 @@ const Topbar = ({ onSidebarOpen }) => {
     <div className="bg-white shadow-sm border-b border-gray-200 px-3 sm:px-4 py-2 sm:py-3 flex items-center justify-between lg:justify-center relative">
       {/* Sidebar open button - left */}
       <button
-        className="lg:hidden flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-full p-1.5 sm:p-2 transition"
+        className="lg:hidden flex items-center justify-center rounded-full p-1.5 sm:p-2 transition"
         aria-label="Open sidebar"
         onClick={onSidebarOpen}
       >
-        <Menu className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700" />
+        <Menu className="w-5 h-5 sm:w-6 sm:h-6 text-black" />
       </button>
       {/* Centered Logo and Website Name */}
       <div className="flex flex-1 justify-center items-center space-x-2 sm:space-x-3">
-        <div className="w-7 h-7 sm:w-9 sm:h-9 bg-red-100 rounded-full flex items-center justify-center text-red-500 text-lg sm:text-xl font-bold">
-          {/* LOGO */}
-        </div>
-        <span className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-800 tracking-wide">Blood Donation</span>
+        {/* <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-full flex items-center justify-center text-red-500 text-lg sm:text-xl font-bold">
+          <image src="/public/om.png" alt="Logo" className="w-full h-full object-cover rounded-full" />
+        </div> */}
+        <span className="yatra-one text-3xl sm:text-5xl lg:text-6xl font-bold text-blood-red tracking-wide drop-shadow-md text-outline">
+          रक्तदान महायज्ञ
+        </span>
       </div>
       {/* Total Donors Counter - right */}
       <div className="flex items-center">
-        <div className="bg-red-500 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-semibold shadow-lg text-xs sm:text-sm lg:text-base whitespace-nowrap">
-          Total Donors: {totalDonors}
+        {/* <div className="bg-red-500 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-semibold shadow-lg text-xs sm:text-sm lg:text-base whitespace-nowrap">
+          Donors : {totalDonors}
+        </div> */}
+        <div className="bg-blood-red text-white px-3 py-1 sm:px-4 sm:py-2 rounded-lg font-semibold shadow-md text-xs sm:text-sm lg:text-base flex items-center justify-center sm:justify-start gap-1 sm:gap-2">
+          <span className="font-bold">{totalDonors}</span>
+          <span className="hidden sm:inline">Donors</span>
         </div>
       </div>
     </div>

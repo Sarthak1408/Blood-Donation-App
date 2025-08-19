@@ -95,3 +95,9 @@ input:focus, select:focus, textarea:focus {
   border-color: #ef4444;
   background-color: #fef2f2;
 }
+
+.yatra-one-regular {
+  font-family: "Yatra One", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
