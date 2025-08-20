@@ -1,7 +1,7 @@
 import React from 'react';
+import { LoadingOverlay } from './LoadingSpinner';
 
-
-const AddDonor = ({ formData, handleInputChange, handleSubmit }) => {
+const AddDonor = ({ formData, handleInputChange, handleSubmit, loading }) => {
   // Allow normal typing, validate on blur
   const handlePhoneBlur = (e) => {
     let value = e.target.value.replace(/\D/g, '');
@@ -14,10 +14,11 @@ const AddDonor = ({ formData, handleInputChange, handleSubmit }) => {
 
   return (
     <div className="p-4 md:p-6 lg:p-8">
+      {loading && <LoadingOverlay message="Adding donor..." />}
       <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-lg">
         {/* Header */}
         <div className="bg-gradient-to-r from-red-500 to-red-600 px-6 py-5 rounded-t-xl">
-          <h3 className="text-xl md:text-2xl font-bold text-white">Add New Donor</h3>
+          <h3 className="text-xl md:text-2xl font-bold text-white uppercase">Add Donor</h3>
         </div>
 
         {/* Form Content */}

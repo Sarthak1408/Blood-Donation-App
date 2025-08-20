@@ -1,20 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Heart, UserPlus } from 'lucide-react';
 import { supabase } from '../supabaseClient';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title } from 'chart.js';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 
 // Register ChartJS components
 ChartJS.register(
   ArcElement, 
   Tooltip, 
-  Legend,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  PointElement,
-  LineElement,
-  Title
+  Legend
 );
 
 
@@ -55,25 +49,8 @@ const Dashboard = () => {
       return acc;
     }, {});
 
-    // Monthly donation trends (last 6 months)
-    const monthlyDonations = {};
-    const now = new Date();
-    for (let i = 5; i >= 0; i--) {
-      const month = new Date(now.getFullYear(), now.getMonth() - i, 1);
-      const monthKey = month.toLocaleString('default', { month: 'short' });
-      monthlyDonations[monthKey] = 0;
-    }
-    donors.forEach(donor => {
-      const donationDate = new Date(donor.created_at);
-      const monthKey = donationDate.toLocaleString('default', { month: 'short' });
-      if (monthlyDonations.hasOwnProperty(monthKey)) {
-        monthlyDonations[monthKey]++;
-      }
-    });
-
     return { 
-      stats: { total, male, female, firstTime, bloodTypes },
-      monthlyDonations,
+      stats: { total, male, female, firstTime, bloodTypes }
     };
   };
 
@@ -112,10 +89,9 @@ const Dashboard = () => {
         {/* Digital Clock Card */}
         <div className="lg:col-span-2 bg-gradient-to-r from-gray-900 to-gray-800 rounded-xl shadow-xl p-6">
           <div className="flex flex-col items-center justify-center h-full">
-            <p className="text-3xl md:text-4xl lg:text-5xl font-mono text-white tracking-wider mb-2">
+            <p className="text-4xl md:text-4xl lg:text-5xl font-mono text-white tracking-wider mb-2">
               {getFormattedTime()}
             </p>
-            {/* <p className="text-sm md:text-base text-gray-400">Indian Standard Time</p> */}
           </div>
         </div>
 
@@ -171,7 +147,6 @@ const Dashboard = () => {
                   <span className="text-white font-bold">{type}</span>
                 </div>
                 <p className="text-2xl font-bold text-gray-900 text-center mb-1">{stats.bloodTypes[type] || 0}</p>
-                {/* <p className="text-xs text-gray-500 text-center uppercase tracking-wider">donors</p> */}
               </div>
             ))}
           </div>
@@ -208,11 +183,11 @@ const Dashboard = () => {
                     legend: {
                       position: 'bottom',
                       labels: {
-                        padding: () => window.innerWidth < 768 ? 10 : 20,
+                        padding: 15,
                         font: {
-                          size: () => window.innerWidth < 768 ? 12 : 14
+                          size: 12
                         },
-                        boxWidth: () => window.innerWidth < 768 ? 12 : 15
+                        boxWidth: 12
                       }
                     }
                   },
