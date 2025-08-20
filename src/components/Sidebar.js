@@ -26,16 +26,16 @@ const Sidebar = ({ activeTab, setActiveTab, sidebarItems, isOpen, onClose }) => 
 
       {/* Sidebar Container */}
       <aside 
-        className={`fixed lg:relative inset-y-0 left-0 z-50 w-72 lg:w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out ${
+        className={`fixed lg:relative inset-y-0 left-0 z-50 w-72 lg:w-64 bg-gradient-to-b from-orange-100 via-orange-300 to-orange-500 backdrop-blur-sm border-r border-orange-200/30 shadow-lg transform transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         }`}
         aria-label="Sidebar"
       >
         {/* Logo Section */}
-        <div className="p-5 border-b border-gray-200">
+        <div className="p-5 border-b border-orange-200/20 backdrop-blur-sm bg-white/5">
           <div>
             <h1 className="yatra-one text-4xl lg:text-3xl font-bold text-blood-red text-outline text-center">सदगुरु 'माँ ज्ञान' जन्मोत्सव</h1>
-            <p className="yatra-one text-sm  font-bold text-blood-red text-center">रक्तदान महायज्ञ</p>
+            <p className="yatra-one text-sm lg:text-lg font-bold text-blood-red text-center">रक्तदान महायज्ञ</p>
           </div>
         </div>
 
@@ -54,7 +54,7 @@ const Sidebar = ({ activeTab, setActiveTab, sidebarItems, isOpen, onClose }) => 
                     className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
                       activeTab === item.id
                         ? 'bg-red-50 text-red-600 border-r-4 border-red-500 translate-x-1'
-                        : 'text-gray-600 hover:bg-gray-50 hover:text-gray-800 hover:translate-x-1'
+                        : 'text-black-600 hover:bg-black-50 hover:text-gray-800 hover:translate-x-1'
                     }`}
                   >
                     <Icon className="w-6 h-6 lg:w-5 lg:h-5" />

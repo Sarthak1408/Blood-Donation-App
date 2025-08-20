@@ -154,7 +154,7 @@ const App = () => {
 
   return (
     <ErrorBoundary>
-      <div className="flex h-screen bg-gray-100">
+      <div className="flex h-screen bg-orange-100">
         {/* Sidebar */}
         <Sidebar
           activeTab={activeTab}
@@ -169,7 +169,7 @@ const App = () => {
           {/* Topbar */}
           <Topbar onSidebarOpen={() => setSidebarOpen(true)} />
           {/* Main Area */}
-          <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50">
+          <main className="flex-1 overflow-x-hidden overflow-y-auto bg-orange-100">
             <div className="container mx-auto px-2 sm:px-4 lg:px-6 py-4">
               {renderMainContent()}
             </div>

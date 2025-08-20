@@ -15,34 +15,34 @@ const AddDonor = ({ formData, handleInputChange, handleSubmit, loading }) => {
   return (
     <div className="p-4 md:p-6 lg:p-8">
       {loading && <LoadingOverlay message="Adding donor..." />}
-      <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-lg">
+      <div className="max-w-2xl mx-auto bg-gradient-to-br from-orange-200 to-orange-300 rounded-xl shadow-lg">
         {/* Header */}
-        <div className="bg-gradient-to-r from-red-500 to-red-600 px-6 py-5 rounded-t-xl">
+        <div className="bg-gradient-to-br from-orange-300 to-orange-400 px-6 py-5 rounded-t-xl border-b border-orange-300">
           <h3 className="text-xl md:text-2xl font-bold text-white uppercase">Add Donor</h3>
         </div>
 
         {/* Form Content */}
-        <div className="p-6 md:p-8">
+        <div className="p-6 md:p-8 bg-white/80 backdrop-blur-sm">
           <div className="space-y-6">
             {/* Full Name */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Full Name <span className="text-red-500">*</span>
+              <label className="block text-sm font-medium text-orange-900 mb-2">
+                Full Name <span className="text-orange-500">*</span>
               </label>
               <input
                 type="text"
                 name="name"
                 value={formData.name}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all"
+                className="w-full px-4 py-2.5 rounded-lg border border-orange-300 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition-all bg-white/90"
                 placeholder="Enter full name"
               />
             </div>
 
             {/* Gender Selection */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Gender <span className="text-red-500">*</span>
+              <label className="block text-sm font-medium text-orange-900 mb-2">
+                Gender <span className="text-orange-500">*</span>
               </label>
               <div className="flex gap-6">
                 <label className="inline-flex items-center">
@@ -52,9 +52,9 @@ const AddDonor = ({ formData, handleInputChange, handleSubmit, loading }) => {
                     value="male"
                     checked={formData.gender === 'male'}
                     onChange={handleInputChange}
-                    className="form-radio text-red-600 w-4 h-4"
+                    className="form-radio text-orange-600 w-4 h-4 border-orange-400"
                   />
-                  <span className="ml-2 text-gray-700">Male</span>
+                  <span className="ml-2 text-orange-900">Male</span>
                 </label>
                 <label className="inline-flex items-center">
                   <input
@@ -63,9 +63,9 @@ const AddDonor = ({ formData, handleInputChange, handleSubmit, loading }) => {
                     value="female"
                     checked={formData.gender === 'female'}
                     onChange={handleInputChange}
-                    className="form-radio text-red-600 w-4 h-4"
+                    className="form-radio text-orange-600 w-4 h-4 border-orange-400"
                   />
-                  <span className="ml-2 text-gray-700">Female</span>
+                  <span className="ml-2 text-orange-900">Female</span>
                 </label>
               </div>
             </div>
@@ -73,14 +73,14 @@ const AddDonor = ({ formData, handleInputChange, handleSubmit, loading }) => {
             {/* Blood Type and Phone Row */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Blood Type <span className="text-red-500">*</span>
+                <label className="block text-sm font-medium text-orange-900 mb-2">
+                  Blood Type <span className="text-orange-500">*</span>
                 </label>
                 <select
                   name="blood_type"
                   value={formData.blood_type}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all bg-white"
+                  className="w-full px-4 py-2.5 rounded-lg border border-orange-300 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition-all bg-white/90"
                 >
                   <option value="">Select Blood Type</option>
                   {['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'].map(type => (
@@ -89,8 +89,8 @@ const AddDonor = ({ formData, handleInputChange, handleSubmit, loading }) => {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Contact Number <span className="text-red-500">*</span>
+                <label className="block text-sm font-medium text-orange-900 mb-2">
+                  Contact Number <span className="text-orange-500">*</span>
                 </label>
                 <input
                   type="tel"
@@ -99,7 +99,7 @@ const AddDonor = ({ formData, handleInputChange, handleSubmit, loading }) => {
                   onChange={handleInputChange}
                   onBlur={handlePhoneBlur}
                   maxLength="10"
-                  className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all"
+                  className="w-full px-4 py-2.5 rounded-lg border border-orange-300 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition-all bg-white/90"
                   placeholder="Enter 10 digit Contact Number"
                 />
               </div>
@@ -107,15 +107,15 @@ const AddDonor = ({ formData, handleInputChange, handleSubmit, loading }) => {
 
             {/* Address */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Address <span className="text-red-500">*</span>
+              <label className="block text-sm font-medium text-orange-900 mb-2">
+                Address <span className="text-orange-500">*</span>
               </label>
               <input
                 type="text"
                 name="address"
                 value={formData.address}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all"
+                className="w-full px-4 py-2.5 rounded-lg border border-orange-300 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition-all bg-white/90"
                 placeholder="Enter Address"
               />
             </div>
@@ -127,9 +127,9 @@ const AddDonor = ({ formData, handleInputChange, handleSubmit, loading }) => {
                 name="isFirstTime"
                 checked={formData.isFirstTime}
                 onChange={handleInputChange}
-                className="w-4 h-4 text-red-600 focus:ring-red-500 border-gray-300 rounded"
+                className="w-4 h-4 text-orange-600 focus:ring-orange-400 border-orange-300 rounded"
               />
-              <label className="ml-2 text-sm font-medium text-gray-700">
+              <label className="ml-2 text-sm font-medium text-orange-900">
                 First Time Donor
               </label>
             </div>
@@ -138,7 +138,7 @@ const AddDonor = ({ formData, handleInputChange, handleSubmit, loading }) => {
             <button
               type="button"
               onClick={handleSubmit}
-              className="w-full bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 hover:opacity-90 active:transform active:scale-98"
+              className="w-full bg-gradient-to-br from-orange-400 to-orange-500 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 hover:opacity-90 active:transform active:scale-98"
             >
               Add Donor
             </button>

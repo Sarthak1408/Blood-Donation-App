@@ -28,7 +28,7 @@ const Topbar = ({ onSidebarOpen }) => {
   }, []);
 
   return (
-    <div className="bg-white shadow-sm border-b border-gray-200 px-3 sm:px-4 py-2 sm:py-3 flex items-center justify-between lg:justify-center relative">
+    <div className="bg-gradient-to-r from-orange-500 via-orange-100 to-orange-500 shadow-lg backdrop-blur-sm border-b border-orange-300/30 px-3 sm:px-4 py-2 sm:py-3 flex items-center justify-between lg:justify-center relative">
       {/* Sidebar open button - left */}
       <button
         className="lg:hidden flex items-center justify-center rounded-full p-1.5 sm:p-2 transition"
