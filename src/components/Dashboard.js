@@ -60,6 +60,7 @@ const Dashboard = () => {
   // Fetch donors and subscribe to real-time updates
   useEffect(() => {
     let channel;
+
     const fetchDonors = async () => {
       const { data, error } = await supabase
         .from('donors')
@@ -67,18 +68,49 @@ const Dashboard = () => {
         .order('created_at', { ascending: false });
       if (!error) setDonors(data || []);
     };
+
     fetchDonors();
 
     // Real-time subscription
-    channel = supabase.channel('donors-changes')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'donors' }, payload => {
-        // Refetch donors on any change
-        fetchDonors();
-      })
+    channel = supabase
+      .channel('dashboard-donors')
+      .on(
+        'postgres_changes',
+        { 
+          event: '*', 
+          schema: 'public', 
+          table: 'donors' 
+        },
+        (payload) => {
+          console.log('Real-time update received:', payload);
+          switch (payload.eventType) {
+            case 'INSERT':
+              setDonors(currentDonors => [payload.new, ...currentDonors]);
+              break;
+            case 'DELETE':
+              setDonors(currentDonors => 
+                currentDonors.filter(donor => donor.id !== payload.old.id)
+              );
+              break;
+            case 'UPDATE':
+              setDonors(currentDonors =>
+                currentDonors.map(donor =>
+                  donor.id === payload.new.id ? payload.new : donor
+                )
+              );
+              break;
+            default:
+              fetchDonors();
+          }
+        }
+      )
       .subscribe();
 
     return () => {
-      if (channel) supabase.removeChannel(channel);
+      if (channel) {
+        console.log('Cleaning up subscription');
+        supabase.removeChannel(channel);
+      }
     };
   }, []);
 
