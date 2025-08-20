@@ -48,12 +48,13 @@ const Topbar = ({ onSidebarOpen }) => {
       </div>
       {/* Total Donors Counter - right */}
       <div className="flex items-center">
-        {/* <div className="bg-red-500 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-semibold shadow-lg text-xs sm:text-sm lg:text-base whitespace-nowrap">
-          Donors : {totalDonors}
-        </div> */}
-        <div className="bg-blood-red text-white px-3 py-1 sm:px-4 sm:py-2 rounded-lg font-semibold shadow-md text-xs sm:text-sm lg:text-base flex items-center justify-center sm:justify-start gap-1 sm:gap-2">
-          <span className="font-bold">{totalDonors}</span>
-          <span className="hidden sm:inline">Donors</span>
+        <div 
+          onClick={() => window.location.href = '/dashboard'} 
+          className="bg-red-500 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-semibold shadow-lg text-xs sm:text-sm lg:text-base whitespace-nowrap uppercase cursor-pointer hover:bg-red-600 transition-colors duration-200 hover:shadow-xl active:bg-red-700"
+          title="Total Donors - Click to view Dashboard"
+        >
+          <span className="hidden sm:inline">Donors : </span>
+          {totalDonors}
         </div>
       </div>
     </div>
