@@ -116,12 +116,10 @@ const Dashboard = () => {
 
   return (
     <div className="p-4 md:p-6 lg:p-8 animate-fadeIn">
-      {/* Top Section with Clock and Total Stats */}
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 mb-8">
-        {/* Digital Clock Card */}
-        <div className="lg:col-span-2 bg-gradient-to-r from-gray-900 to-gray-800 rounded-xl shadow-xl p-6">
+        <div className="lg:col-span-2 bg-gradient-to-r from-gray-900 to-gray-800 rounded-xl shadow-2xl p-6">
           <div className="flex flex-col items-center justify-center h-full">
-            <p className="text-4xl md:text-4xl lg:text-5xl font-mono text-white tracking-wider mb-2">
+            <p className="text-4xl md:text-4xl lg:text-5xl font-mono font-medium text-white tracking-wider mb-2">
               {getFormattedTime()}
             </p>
           </div>
@@ -129,40 +127,40 @@ const Dashboard = () => {
 
         {/* Stats Overview */}
         <div className="lg:col-span-3 grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="bg-gradient-to-br from-orange-200 to-orange-300 rounded-xl shadow-md p-4 border-b-4 border-orange-500 hover:shadow-lg transition-shadow">
+          <div className="bg-gradient-to-br from-orange-300 to-orange-200 rounded-xl shadow-xl p-4 border-b-4 border-red-600 hover:shadow-lg transition-shadow">
             <div className="flex flex-col">
               <div className="flex items-center justify-between mb-2">
-                <Heart className="w-8 h-8 text-orange-700" />
-                <p className="text-sm md:text-base font-medium text-orange-700 uppercase">Total</p>
+                <Heart className="w-8 h-8 text-red-800" />
+                <p className="text-sm text-right md:text-base font-mono font-bold text-orange-700 uppercase">Total</p>
               </div>
-              <p className="text-2xl md:text-3xl font-bold text-right text-orange-900">{stats.total}</p>
+              <p className="text-3xl md:text-4xl font-mono font-extrabold text-right text-orange-900">{stats.total}</p>
             </div>
           </div>
-          <div className="bg-gradient-to-br from-orange-200 to-orange-300 rounded-xl shadow-md p-4 border-b-4 border-red-500 hover:shadow-lg transition-shadow">
+          <div className="bg-gradient-to-br from-orange-300 to-orange-200 rounded-xl shadow-xl p-4 border-b-4 border-orange-600 hover:shadow-lg transition-shadow">
             <div className="flex flex-col">
               <div className="flex items-center justify-between mb-2">
-                <UserPlus className="w-8 h-8 text-orange-700" />
-                <p className="text-sm md:text-base font-medium text-orange-700 uppercase">First Time</p>
+                <UserPlus className="w-8 h-8 text-orange-500" />
+                <p className="md:text-xs text-sm text-right md:text-base font-mono font-bold text-orange-700 uppercase">First Time</p>
               </div>
-              <p className="text-2xl md:text-3xl font-bold text-right text-orange-900">{stats.firstTime}</p>
+              <p className="text-3xl md:text-4xl font-mono font-bold text-right text-orange-900">{stats.firstTime}</p>
             </div>
           </div>
-          <div className="bg-gradient-to-br from-orange-200 to-orange-300 rounded-xl shadow-md p-4 border-b-4 border-purple-500 hover:shadow-lg transition-shadow">
+          <div className="bg-gradient-to-br from-orange-300 to-orange-200 rounded-xl shadow-xl p-4 border-b-4 border-purple-500 hover:shadow-lg transition-shadow">
             <div className="flex flex-col">
               <div className="flex items-center justify-between mb-2">
-                <span className="w-8 h-8 flex items-center justify-center text-orange-700 text-2xl">♂️</span>
-                <p className="text-sm md:text-base font-medium text-orange-700 uppercase">Male</p>
+                <span className="w-8 h-8 flex items-center justify-center text-purple-600 font-bold text-2xl sm:text-4xl">♂️</span>
+                <p className="text-sm md:text-base font-mono font-bold text-orange-700 uppercase">Male</p>
               </div>
-              <p className="text-2xl md:text-3xl font-bold text-right text-orange-900">{stats.male}</p>
+              <p className="text-3xl md:text-4xl font-mono font-bold text-right text-orange-900">{stats.male}</p>
             </div>
           </div>
-          <div className="bg-gradient-to-br from-orange-200 to-orange-300 rounded-xl shadow-md p-4 border-b-4 border-pink-500 hover:shadow-lg transition-shadow">
+          <div className="bg-gradient-to-br from-orange-300 to-orange-200 rounded-xl shadow-xl p-4 border-b-4 border-pink-500 hover:shadow-lg transition-shadow">
             <div className="flex flex-col">
               <div className="flex items-center justify-between mb-2">
-                <span className="w-8 h-8 flex items-center justify-center text-orange-700 text-2xl">♀️</span> 
-                <p className="text-sm md:text-base font-medium text-orange-700 uppercase">Female</p>
+                <span className="w-8 h-8 flex items-center justify-center text-pink-600 font-bold text-2xl sm:text-4xl">♀️</span> 
+                <p className="text-sm md:text-base font-mono font-bold text-orange-700 uppercase">Female</p>
               </div>
-              <p className="text-2xl md:text-3xl font-bold text-right text-orange-900">{stats.female}</p>
+              <p className="text-3xl md:text-4xl font-mono font-bold text-right text-orange-900">{stats.female}</p>
             </div>
           </div>
         </div>
@@ -170,15 +168,15 @@ const Dashboard = () => {
 
       {/* Middle Section - Blood Type Distribution */}
       <div className="mb-8">
-        <div className="bg-gradient-to-br from-orange-200 to-orange-300 rounded-xl shadow-lg p-6 border border-orange-300">
-          <h3 className="text-xl font-semibold text-orange-900 mb-6">Blood Type Distribution</h3>
+        <div className="bg-gradient-to-br from-orange-300 to-orange-300 rounded-xl shadow-xl p-6 border border-orange-300">
+          <h3 className="text-xl font-mono font-extrabold text-orange-900 mb-6 tracking-tight capitalize text-center">Blood Type Distribution</h3>
           <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4">
             {['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'].map(type => (
-              <div key={type} className="bg-white/60 backdrop-blur-sm rounded-xl p-4 hover:bg-orange-100 transition-colors border border-orange-300/50">
+              <div key={type} className="bg-white/60 backdrop-blur-sm rounded-xl p-4 hover:bg-orange-100 transition-colors shadow-lg border border-orange-300/50">
                 <div className="w-12 h-12 bg-gradient-to-br from-orange-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <span className="text-white font-bold">{type}</span>
+                  <span className="text-white font-mono font-extrabold">{type}</span>
                 </div>
-                <p className="text-2xl font-bold text-orange-900 text-center mb-1">{stats.bloodTypes[type] || 0}</p>
+                <p className="text-2xl font-mono font-bold text-orange-900 text-center mb-1">{stats.bloodTypes[type] || 0}</p>
               </div>
             ))}
           </div>
@@ -188,8 +186,8 @@ const Dashboard = () => {
       {/* Analytics Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
         {/* Gender Distribution Chart */}
-        <div className="bg-gradient-to-br from-orange-200 to-orange-300 rounded-xl shadow-lg p-6 md:p-8 hover:shadow-xl transition-shadow duration-300 border border-orange-300">
-          <h3 className="text-xl md:text-2xl font-semibold text-orange-900 mb-6 md:mb-8 text-center">Gender Distribution</h3>
+        <div className="bg-gradient-to-br from-orange-300 to-orange-300 rounded-xl shadow-xl p-6 md:p-8 hover:shadow-xl transition-shadow duration-300 border border-orange-300">
+          <h3 className="text-xl md:text-2xl font-mono font-extrabold tracking-tight text-orange-900 mb-6 md:mb-8 text-center">Gender Distribution</h3>
           <div className="w-full h-[300px] md:h-[350px] flex items-center justify-center">
             <div style={{ width: '90%', height: '90%' }}>
               <Doughnut
@@ -198,14 +196,14 @@ const Dashboard = () => {
                   datasets: [{
                     data: [stats.male, stats.female],
                     backgroundColor: [
-                      'rgba(234, 88, 12, 0.9)',
-                      'rgba(249, 115, 22, 0.9)'
+                      'rgba(147, 51, 234, 0.9)',
+                      'rgba(236, 72, 153, 0.9)'
                     ],
                     borderColor: [
-                      'rgb(234, 88, 12)',
-                      'rgb(249, 115, 22)',
+                      'rgb(147, 51, 234)',
+                      'rgb(236, 72, 153)',
                     ],
-                    borderWidth: 2
+                    borderWidth: 10
                   }]
                 }}
                 options={{
@@ -217,13 +215,13 @@ const Dashboard = () => {
                       labels: {
                         padding: 15,
                         font: {
-                          size: 12
+                          size: 16
                         },
                         boxWidth: 12
                       }
                     }
                   },
-                  cutout: '65%'
+                  cutout: '50%'
                 }}
               />
             </div>
@@ -231,22 +229,22 @@ const Dashboard = () => {
         </div>
 
         {/* Recent Activity Card */}
-        <div className="bg-gradient-to-br from-orange-200 to-orange-300 rounded-xl shadow-lg p-6 md:p-8 hover:shadow-xl transition-shadow duration-300 border border-orange-300">
-          <h3 className="text-xl md:text-2xl font-semibold text-orange-900 mb-6 md:mb-8 text-center">Recent Donors</h3>
+        <div className="bg-gradient-to-br from-orange-300 to-orange-300 rounded-xl shadow-xl p-4 md:p-6 hover:shadow-xl transition-shadow duration-300 border border-orange-300">
+          <h3 className="text-xl md:text-2xl font-mono font-extrabold tracking-tight text-orange-900 mb-6 md:mb-8 text-center">Recent Donors</h3>
           <div className="space-y-4">
             {donors.slice(0, 4).map((donor, index) => (
-              <div key={donor.id} className="flex items-center justify-between p-4 bg-white/60 backdrop-blur-sm rounded-lg hover:bg-orange-100 transition-colors border border-orange-300/30">
+              <div key={donor.id} className="flex items-center justify-between p-4 bg-white/60 shadow-xl backdrop-blur-sm rounded-lg hover:bg-orange-100 transition-colors border border-orange-300/30">
                 <div className="flex items-center space-x-4">
                   <div className="w-10 h-10 bg-gradient-to-br from-orange-400 to-orange-500 rounded-full flex items-center justify-center">
-                    <span className="text-white font-bold text-sm">{donor.blood_type}</span>
+                    <span className="text-white font-mono font-extrabold text-sm">{donor.blood_type}</span>
                   </div>
                   <div>
-                    <p className="font-medium text-orange-900">{donor.name}</p>
-                    <p className="text-sm text-orange-700">{donor.address}</p>
+                    <p className="font-mono font-medium text-orange-900 tracking-tight capitalize">{donor.name}</p>
+                    <p className="text-sm font-mono tracking-tight text-orange-700">{donor.address}</p>
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="text-sm text-orange-700">
+                  <p className="text-sm font-mono tracking-tight text-orange-700">
                     {new Date(donor.created_at).toLocaleTimeString('en-IN', {
                       hour: '2-digit',
                       minute: '2-digit',
