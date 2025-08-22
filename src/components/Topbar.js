@@ -1,25 +1,29 @@
+import React, { useEffect, useState } from "react";
+import { supabase } from "../supabaseClient";
+import { Menu } from "lucide-react";
 
-import React, { useEffect, useState } from 'react';
-import { supabase } from '../supabaseClient';
-import { Menu } from 'lucide-react';
-
-const Topbar = ({ onSidebarOpen }) => {
+const Topbar = ({ onSidebarOpen, onDonorCountClick }) => {
   const [totalDonors, setTotalDonors] = useState(0);
 
   useEffect(() => {
     let channel;
     const fetchCount = async () => {
       const { count, error } = await supabase
-        .from('donors')
-        .select('*', { count: 'exact', head: true });
-      if (!error && typeof count === 'number') setTotalDonors(count);
+        .from("donors")
+        .select("*", { count: "exact", head: true });
+      if (!error && typeof count === "number") setTotalDonors(count);
     };
     fetchCount();
 
-    channel = supabase.channel('donors-count-changes')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'donors' }, payload => {
-        fetchCount();
-      })
+    channel = supabase
+      .channel("donors-count-changes")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "donors" },
+        (payload) => {
+          fetchCount();
+        }
+      )
       .subscribe();
 
     return () => {
@@ -28,11 +32,13 @@ const Topbar = ({ onSidebarOpen }) => {
   }, []);
 
   return (
-    <div className="bg-gradient-to-r from-orange-600/30 via-orange-200/10 to-orange-600/30 
+    <div
+      className="bg-gradient-to-r from-orange-600/30 via-orange-200/10 to-orange-600/30 
                 backdrop-blur-md shadow-lg 
                 px-3 sm:px-4 py-4 sm:py-3 
-                flex items-center justify-between lg:justify-center relative ">  
-    {/* Sidebar open button - left */}
+                flex items-center justify-between lg:justify-center relative "
+    >
+      {/* Sidebar open button - left */}
       <button
         className="lg:hidden flex items-center justify-center rounded-full p-1.5 sm:p-2 transition hover:bg-orange-200/50 active:bg-orange-300/50"
         aria-label="Open sidebar"
@@ -42,19 +48,16 @@ const Topbar = ({ onSidebarOpen }) => {
       </button>
       {/* Centered Logo and Website Name */}
       <div className="flex flex-1 justify-center items-center space-x-2 sm:space-x-3">
-        {/* <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-full flex items-center justify-center text-red-500 text-lg sm:text-xl font-bold">
-          <image src="/public/om.png" alt="Logo" className="w-full h-full object-cover rounded-full" />
-        </div> */}
         <span className="yatra-one text-4xl sm:text-5xl lg:text-6xl font-bold text-blood-red drop-shadow-xl text-outline">
           रक्तदान महायज्ञ
         </span>
       </div>
       {/* Total Donors Counter - right */}
       <div className="flex items-center">
-        <div 
-          onClick={() => window.location.href = '/dashboard'} 
+        <div
+          onClick={onDonorCountClick}
           className="bg-gradient-to-r from-red-500 to-red-600 text-white px-2 sm:px-4 py-1.5 sm:py-2 rounded-full font-mono font-extrabold shadow-xl text-sm sm:text-sm lg:text-base whitespace-nowrap uppercase cursor-pointer hover:from-red-600 hover:to-red-700 transition-all duration-300 hover:shadow-2xl active:from-red-700 active:to-red-800 tracking-wider backdrop-blur-sm border border-red-400/20"
-          title="Total Donors - Click to view Dashboard"
+          title="Total Donors - Click to view Big Display"
         >
           <span className="hidden sm:inline">Donors : </span>
           {totalDonors}

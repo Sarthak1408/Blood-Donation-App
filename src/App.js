@@ -9,6 +9,7 @@ import DonorList from './components/DonorList';
 import Settings from './components/Settings';
 import { supabase } from './supabaseClient';
 import ErrorBoundary from './components/ErrorBoundary';
+import BigDisplayModal from './components/BigDisplayModal'; // <-- Add this import
 
 const sidebarItems = [
   { id: 'dashboard', icon: LayoutDashboard, label: 'Dashboard' },
@@ -30,6 +31,7 @@ const App = () => {
     isFirstTime: false
   });
   const [loading, setLoading] = useState(false);
+  const [bigModalOpen, setBigModalOpen] = useState(false); // <-- Modal state
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -136,6 +138,12 @@ const App = () => {
     };
   }, []);
 
+  // Calculate stats for modal
+  const total = donors.length;
+  const male = donors.filter(d => d.gender === 'male').length;
+  const female = donors.filter(d => d.gender === 'female').length;
+  const stats = { total, male, female };
+
   // Main Content Renderer
   const renderMainContent = () => {
     switch (activeTab) {
@@ -167,13 +175,23 @@ const App = () => {
         {/* Main Content Area */}
         <div className="flex-1 flex flex-col min-w-0">
           {/* Topbar */}
-          <Topbar onSidebarOpen={() => setSidebarOpen(true)} />
+          <Topbar
+            onSidebarOpen={() => setSidebarOpen(true)}
+            onDonorCountClick={() => setBigModalOpen(true)} // <-- Pass open handler
+          />
           {/* Main Area */}
           <main className="flex-1 overflow-x-hidden overflow-y-auto bg-orange-100">
             <div className="container mx-auto px-2 sm:px-4 lg:px-6 py-4">
               {renderMainContent()}
             </div>
           </main>
+          {/* Big Display Modal */}
+          <BigDisplayModal
+            open={bigModalOpen}
+            onClose={() => setBigModalOpen(false)}
+            stats={stats}
+            donors={donors}
+          />
         </div>
       </div>
     </ErrorBoundary>
