@@ -1,7 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { LoadingOverlay } from './LoadingSpinner';
 
 const AddDonor = ({ formData, handleInputChange, handleSubmit, loading }) => {
+  // Predefined city list
+  const cityOptions = [
+    'Giridih',
+    'Isri', 
+    'Koderma',
+    'Ranchi',
+    'Gaya',
+    'Parwalpur',
+    'Bihar Sarif',
+    'Mahnar',
+    'Jamshedpur',
+    'Dhanbad',
+    'Bokaro',
+    'Deoghar',
+    'Dumka',
+    'Hazaribagh',
+    'Ramgarh',
+    'Khunti',
+    'Latehar',
+    'Chatra',
+  ];
+
+  // State for city autocomplete
+  const [cityFilteredOptions, setCityFilteredOptions] = useState([]);
+  const [showCitySuggestions, setShowCitySuggestions] = useState(false);
+
   // Allow normal typing, validate on blur
   const handlePhoneBlur = (e) => {
     let value = e.target.value.replace(/\D/g, '');
@@ -9,6 +35,50 @@ const AddDonor = ({ formData, handleInputChange, handleSubmit, loading }) => {
     handleInputChange({
       ...e,
       target: { ...e.target, value }
+    });
+  };
+
+  // Handle city input with autocomplete
+  const handleCityInputChange = (e) => {
+    const value = e.target.value;
+    handleInputChange({
+      target: { name: 'city', value }  // ensure city is always updated
+    });
+
+    if (value.length > 0) {
+      const filtered = cityOptions.filter(city =>
+        city.toLowerCase().includes(value.toLowerCase())
+      );
+      setCityFilteredOptions(filtered);
+      setShowCitySuggestions(filtered.length > 0);
+    } else {
+      setShowCitySuggestions(false);
+    }
+  };
+
+  // Handle city selection from suggestions
+  const handleCitySelect = (selectedCity) => {
+    handleInputChange({
+      target: { name: 'city', value: selectedCity }
+    });
+    setShowCitySuggestions(false);
+  };
+
+  // Hide suggestions when clicking outside
+  const handleCityBlur = () => {
+    // Delay hiding to allow click on suggestions
+    setTimeout(() => setShowCitySuggestions(false), 150);
+  };
+
+  // Handle isDikshit checkbox change with proper boolean handling
+  const handleIsDikshitChange = (e) => {
+    handleInputChange({
+      target: {
+        name: 'isDikshit',
+        type: 'checkbox',
+        checked: e.target.checked,
+        value: e.target.checked
+      }
     });
   };
 
@@ -36,6 +106,7 @@ const AddDonor = ({ formData, handleInputChange, handleSubmit, loading }) => {
                 onChange={handleInputChange}
                 className="w-full px-4 py-2.5 rounded-xl border-2 border-orange-300 placeholder:font-mono placeholder:text-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition-all bg-white/90"
                 placeholder="Enter full name"
+                required
               />
             </div>
 
@@ -53,6 +124,7 @@ const AddDonor = ({ formData, handleInputChange, handleSubmit, loading }) => {
                     checked={formData.gender === 'male'}
                     onChange={handleInputChange}
                     className="form-radio text-orange-600 w-4 h-4 border-orange-400"
+                    required
                   />
                   <span className="ml-2 font-mono font-medium  text-orange-900">Male</span>
                 </label>
@@ -64,6 +136,7 @@ const AddDonor = ({ formData, handleInputChange, handleSubmit, loading }) => {
                     checked={formData.gender === 'female'}
                     onChange={handleInputChange}
                     className="form-radio text-orange-600 w-4 h-4 border-orange-400"
+                    required
                   />
                   <span className="ml-2 font-mono font-medium text-orange-900">Female</span>
                 </label>
@@ -81,9 +154,10 @@ const AddDonor = ({ formData, handleInputChange, handleSubmit, loading }) => {
                   value={formData.blood_type}
                   onChange={handleInputChange}
                   className="w-full px-4 py-2.5 rounded-xl border-2 border-orange-300 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition-all bg-white/90"
+                  required
                 >
                   <option value="" className="font-mono">Select Blood Type</option>
-                  {['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'].map(type => (
+                  {['A+', 'B+', 'AB+', 'O+', 'A-', 'B-', 'AB-', 'O-'].map(type => (
                     <option key={type} value={type}>{type}</option>
                   ))}
                 </select>
@@ -101,37 +175,94 @@ const AddDonor = ({ formData, handleInputChange, handleSubmit, loading }) => {
                   maxLength="10"
                   className="w-full px-4 py-2.5 rounded-xl border-2 placeholder:font-mono placeholder:text-sm border-orange-300 focus:ring-2 focus:ring-orange-400 tracking-tight focus:border-orange-400 transition-all bg-white/90"
                   placeholder="Enter 10 digit Contact Number"
+                  required
                 />
               </div>
             </div>
 
-            {/* Address */}
+            {/* City - Autocomplete Input */}
+            <div className="relative">
+              <label className="block text-sm font-mono font-semibold text-orange-900 mb-2">
+                City <span className="text-orange-500">*</span>
+              </label>
+              <input
+                type="text"
+                name="city"
+                value={formData.city}
+                onChange={handleCityInputChange}
+                onBlur={handleCityBlur}
+                onFocus={() => {
+                  if (formData.city && cityFilteredOptions.length > 0) {
+                    setShowCitySuggestions(true);
+                  }
+                }}
+                className="w-full px-4 py-2.5 rounded-xl border-2 border-orange-300 placeholder:font-mono placeholder:text-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition-all bg-white/90"
+                placeholder="Start typing city name (e.g., Gir...)"
+                autoComplete="off"
+                required
+              />
+              
+              {/* Autocomplete Suggestions */}
+              {showCitySuggestions && cityFilteredOptions.length > 0 && (
+                <div className="absolute z-10 w-full mt-1 bg-white border-2 border-orange-300 rounded-xl shadow-lg max-h-40 overflow-y-auto">
+                  {cityFilteredOptions.map((city, index) => (
+                    <div
+                      key={index}
+                      onClick={() => handleCitySelect(city)}
+                      className="px-4 py-2 hover:bg-orange-100 cursor-pointer font-mono text-orange-900 border-b border-orange-200 last:border-b-0"
+                    >
+                      {city}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Address - Optional */}
             <div>
               <label className="block text-sm font-mono font-semibold text-orange-900 mb-2">
-                Address <span className="text-orange-500">*</span>
+                Address
               </label>
               <input
                 type="text"
                 name="address"
-                value={formData.address}
+                value={formData.address || ''} // Handle null/undefined values
                 onChange={handleInputChange}
                 className="w-full px-4 py-2.5 rounded-xl border-2 border-orange-300 placeholder:font-mono placeholder:text-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition-all bg-white/90"
-                placeholder="Enter Address"
+                placeholder="Enter Address (Optional)"
+                // No required attribute - making it truly optional
               />
             </div>
 
-            {/* First Time Donor Checkbox */}
-            <div className="flex items-center">
-              <input
-                type="checkbox"
-                name="isFirstTime"
-                checked={formData.isFirstTime}
-                onChange={handleInputChange}
-                className="w-5 h-5 text-orange-600 focus:ring-orange-400 border-orange-300 rounded-lg"
-              />
-              <label className="ml-2 text-base font-mono font-semibold text-orange-900">
-                First Time Donor
-              </label>
+            {/* Checkboxes Row */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* First Time Donor Checkbox */}
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  name="isFirstTime"
+                  checked={formData.isFirstTime || false} // Default to false if undefined
+                  onChange={handleInputChange}
+                  className="w-5 h-5 text-orange-600 focus:ring-orange-400 border-orange-300 rounded-lg"
+                />
+                <label className="ml-2 text-base font-mono font-semibold text-orange-900">
+                  First Time Donor
+                </label>
+              </div>
+
+              {/* isDikshit Toggle - Fixed */}
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  name="isDikshit"
+                  checked={formData.isDikshit || false} // Default to false if undefined
+                  onChange={handleIsDikshitChange} // Use custom handler
+                  className="w-5 h-5 text-orange-600 focus:ring-orange-400 border-orange-300 rounded-lg"
+                />
+                <label className="ml-2 text-base font-mono font-semibold text-orange-900">
+                  Dikshit with us
+                </label>
+              </div>
             </div>
 
             {/* Submit Button */}

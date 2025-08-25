@@ -15,7 +15,7 @@ const sidebarItems = [
   { id: 'dashboard', icon: LayoutDashboard, label: 'Dashboard' },
   { id: 'add-donor', icon: UserPlus, label: 'Add Donor' },
   { id: 'donor-list', icon: Users, label: 'Donor List' },
-  { id: 'settings', icon: SettingsIcon, label: 'Settings' }
+  // { id: 'settings', icon: SettingsIcon, label: 'Settings' }
 ];
 
 const App = () => {
@@ -28,7 +28,9 @@ const App = () => {
     phone_number: '',
     gender: '',
     address: '',
-    isFirstTime: false
+    city: '',
+    isFirstTime: false,
+    isDikshit: false
   });
   const [loading, setLoading] = useState(false);
   const [bigModalOpen, setBigModalOpen] = useState(false); // <-- Modal state
@@ -43,7 +45,7 @@ const App = () => {
 
   const handleSubmit = async () => {
     setLoading(true);
-    if (!formData.name || !formData.blood_type || !formData.phone_number || !formData.address || !formData.gender) {
+    if (!formData.name || !formData.blood_type || !formData.phone_number || !formData.gender) {
       alert('Please fill in all required fields');
       setLoading(false);
       return;
@@ -80,7 +82,9 @@ const App = () => {
       blood_type: formData.blood_type,
       phone_number: phoneNumber,
       address: formData.address,
+      city: formData.city,
       isFirstTime: formData.isFirstTime,
+      isDikshit: !!formData.isDikshit,
       gender: formData.gender
     };
 
@@ -106,7 +110,9 @@ const App = () => {
       phone_number: '',
       gender: '',
       address: '',
-      isFirstTime: false
+      city: '',
+      isFirstTime: false,
+      isDikshit: false
     });
     
     alert('Donor added successfully!');

@@ -119,7 +119,7 @@ const BigDisplayModal = ({ open, onClose, stats, donors }) => {
                 {/* Male */}
                 <article className="bg-gradient-to-br from-blue-500/30 to-cyan-500/30 rounded-2xl lg:rounded-3xl p-4 sm:p-9 backdrop-blur-sm border-2 border-blue-300/50 shadow-xl">
                   <div className="text-center">
-                    <div className="text-3xl sm:text-5xl mb-3">👨</div>
+                    <div className="text-3xl sm:text-5xl mb-3">👨🏻</div>
                     <h3 className="text-base sm:text-lg lg:text-xl font-extrabold text-blue-200 mb-2 font-sans">
                       MALE
                     </h3>
@@ -137,7 +137,7 @@ const BigDisplayModal = ({ open, onClose, stats, donors }) => {
                 {/* Female */}
                 <article className="bg-gradient-to-br from-pink-500/30 to-purple-500/30 rounded-2xl lg:rounded-3xl p-4 sm:p-5 backdrop-blur-sm border-2 border-pink-300/50 shadow-xl">
                   <div className="text-center">
-                    <div className="text-3xl sm:text-5xl mb-3 lg:mt-4 ">👩</div>
+                    <div className="text-3xl sm:text-5xl mb-3 lg:mt-4 ">👩🏻</div>
                     <h3 className="text-base sm:text-lg lg:text-xl font-extrabold text-pink-200 mb-1 font-sans">
                       FEMALE
                     </h3>
