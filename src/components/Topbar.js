@@ -4,6 +4,7 @@ import { Menu } from "lucide-react";
 
 const Topbar = ({ onSidebarOpen, onDonorCountClick }) => {
   const [totalDonors, setTotalDonors] = useState(0);
+  const [animateKey, setAnimateKey] = useState(0);
 
   useEffect(() => {
     let channel;
@@ -11,7 +12,10 @@ const Topbar = ({ onSidebarOpen, onDonorCountClick }) => {
       const { count, error } = await supabase
         .from("donors")
         .select("*", { count: "exact", head: true });
-      if (!error && typeof count === "number") setTotalDonors(count);
+      if (!error && typeof count === "number") {
+        setTotalDonors(count);
+        setAnimateKey(prev => prev + 1);
+      }
     };
     fetchCount();
 
@@ -60,7 +64,9 @@ const Topbar = ({ onSidebarOpen, onDonorCountClick }) => {
           title="Total Donors - Click to view Big Display"
         >
           <span className="hidden sm:inline">Donors : </span>
-          {totalDonors}
+          <span key={animateKey} className="inline-block animate-slide-in">
+            {totalDonors}
+          </span>
         </div>
       </div>
     </div>
@@ -68,3 +74,5 @@ const Topbar = ({ onSidebarOpen, onDonorCountClick }) => {
 };
 
 export default Topbar;
+
+

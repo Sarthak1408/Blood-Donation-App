@@ -75,9 +75,9 @@ const DonorList = () => {
               <tr>
                 <th className="px-2 sm:px-4 md:px-6 py-3 text-left text-sm font-mono font-extrabold text-orange-800 uppercase tracking-wider border-b border-orange-200 bg-orange-100/80">Name</th>
                 <th className="hidden md:table-cell px-2 sm:px-4 md:px-6 py-3 text-left text-sm font-mono font-extrabold text-orange-800 uppercase tracking-wider border-b border-orange-200 bg-orange-100/80">Gender</th>
-                <th className="px-2 sm:px-4 md:px-6 py-3 text-left text-sm font-mono font-extrabold text-orange-800 uppercase tracking-wider border-b border-orange-200 bg-orange-100/80">Blood Type</th>
+                <th className="hidden sm:table-cell px-2 sm:px-4 md:px-6 py-3 text-left text-sm font-mono font-extrabold text-orange-800 uppercase tracking-wider border-b border-orange-200 bg-orange-100/80">Blood Type</th>
                 <th className="hidden lg:table-cell px-2 sm:px-4 md:px-6 py-3 text-left text-sm font-mono font-extrabold text-orange-800 uppercase tracking-wider border-b border-orange-200 bg-orange-100/80">City</th>
-                <th className="hidden sm:table-cell px-2 sm:px-4 md:px-6 py-3 text-left text-sm font-mono font-extrabold text-orange-800 uppercase tracking-wider border-b border-orange-200 bg-orange-100/80">Contact</th>
+                <th className="px-2 sm:px-4 md:px-6 py-3 text-left text-sm font-mono font-extrabold text-orange-800 uppercase tracking-wider border-b border-orange-200 bg-orange-100/80">Contact</th>
                 <th className="hidden md:table-cell px-2 sm:px-4 md:px-6 py-3 text-left text-sm font-mono font-extrabold text-orange-800 uppercase tracking-wider border-b border-orange-200 bg-orange-100/80">Dikshit</th>
                 <th className="hidden md:table-cell px-2 sm:px-4 md:px-6 py-3 text-left text-sm font-mono font-extrabold text-orange-800 uppercase tracking-wider border-b border-orange-200 bg-orange-100/80">Time</th>
               </tr>
@@ -100,20 +100,20 @@ const DonorList = () => {
                     <td className="hidden md:table-cell px-2 sm:px-4 md:px-6 py-4 whitespace-nowrap font-mono font-semibold text-base text-orange-800 capitalize">
                       {donor.gender}
                     </td>
-                    <td className="px-2 sm:px-4 md:px-6 py-4 whitespace-nowrap text-base font-mono font-extrabold text-orange-700">
+                    <td className="hidden sm:table-cell px-2 sm:px-4 md:px-6 py-4 whitespace-nowrap text-base font-mono font-extrabold text-orange-700">
                       {donor.blood_type}
                     </td>
                     <td className="hidden lg:table-cell px-2 sm:px-4 md:px-6 py-4 whitespace-nowrap font-mono font-semibold capitalize text-base text-orange-800">
                       {donor.city}
                     </td>
-                    <td className="hidden sm:table-cell px-2 sm:px-4 md:px-6 py-4 whitespace-nowrap">
+                    <td className="px-2 sm:px-4 md:px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center text-base font-mono font-semibold text-orange-900">
                         <Phone className="w-4 h-4 mr-1 text-orange-500" />
                         {donor.phone_number}
                       </div>
                     </td>
                     <td className="hidden md:table-cell px-2 sm:px-4 md:px-6 py-4 whitespace-nowrap text-center text-base">
-                      {donor.isDikshit ? '✅' : ''}
+                      {donor.isDikshit ? '☑️': ''}
                     </td>
                     <td className="hidden md:table-cell px-2 sm:px-4 md:px-6 py-4 whitespace-nowrap text-xs font-mono text-black-500 rounded-r-lg">
                       {donor.created_at ?

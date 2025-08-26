@@ -1,10 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import AnimatedNumber from "./AnimatedNumber";
+import { Fireworks } from "fireworks-js";
 
 const BigDisplayModal = ({ open, onClose, stats, donors }) => {
   const marqueeRef = useRef(null);
   const [showClose, setShowClose] = useState(false);
   const timeoutRef = useRef(null);
+  const [celebrate, setCelebrate] = useState(false);
+  const fireworksRef = useRef(null);
 
   useEffect(() => {
     if (!open || !marqueeRef.current) return;
@@ -57,6 +60,28 @@ const BigDisplayModal = ({ open, onClose, stats, donors }) => {
       clearTimeout(timeoutRef.current);
     };
   }, [open]);
+
+  useEffect(() => {
+    if (stats.total > 0 && stats.total % 50 === 0) {
+      setCelebrate(true);
+      const celebrateTimeout = setTimeout(() => {
+        setCelebrate(false);
+      }, 10000);
+      return () => clearTimeout(celebrateTimeout);
+    }
+  }, [stats.total]);
+
+  useEffect(() => {
+    if (!celebrate) return;
+    if (!fireworksRef.current) return;
+
+    const fireworks = new Fireworks(fireworksRef.current);
+    fireworks.start();
+
+    return () => {
+      fireworks.stop();
+    };
+  }, [celebrate]);
 
   if (!open) return null;
 
@@ -203,6 +228,19 @@ const BigDisplayModal = ({ open, onClose, stats, donors }) => {
           </section>
         </div>
       </main>
+      {celebrate && (
+        <div className="absolute inset-0 z-[10000] flex items-center justify-center bg-black/60 backdrop-blur-sm animate-fadeIn overflow-hidden">
+          <div ref={fireworksRef} className="absolute inset-0"></div>
+          <div className="text-center relative z-10">
+            <h1 className="text-6xl sm:text-8xl font-extrabold text-yellow-400 drop-shadow-2xl animate-bounce">
+              🎉 {stats.total} DONORS 🎉
+            </h1>
+            <p className="mt-4 text-2xl sm:text-4xl text-white font-bold animate-pulse">
+              Milestone Reached!
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

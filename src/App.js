@@ -9,7 +9,7 @@ import DonorList from './components/DonorList';
 import Settings from './components/Settings';
 import { supabase } from './supabaseClient';
 import ErrorBoundary from './components/ErrorBoundary';
-import BigDisplayModal from './components/BigDisplayModal'; // <-- Add this import
+import BigDisplayModal from './components/BigDisplayModal';
 
 const sidebarItems = [
   { id: 'dashboard', icon: LayoutDashboard, label: 'Dashboard' },
@@ -33,7 +33,7 @@ const App = () => {
     isDikshit: false
   });
   const [loading, setLoading] = useState(false);
-  const [bigModalOpen, setBigModalOpen] = useState(false); // <-- Modal state
+  const [bigModalOpen, setBigModalOpen] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -41,6 +41,30 @@ const App = () => {
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }));
+  };
+
+  // Phone number validation function
+  const isValidPhoneNumber = (phoneNumber) => {
+    const cleaned = phoneNumber.replace(/\D/g, '');
+    
+    // Check if it's exactly 10 digits
+    if (cleaned.length !== 10) return false;
+    
+    // Check if all digits are the same (invalid patterns)
+    if (/^(.)\1{9}$/.test(cleaned)) return false;
+    
+    // Check if it starts with 0 or 1 (invalid Indian mobile numbers)
+    if (cleaned.startsWith('0') || cleaned.startsWith('1')) return false;
+    
+    // Check for other invalid patterns
+    const invalidPatterns = [
+      /^123456789[0-9]$/, // Sequential numbers
+      /^987654321[0-9]$/, // Reverse sequential
+      /^1234567890$/,     // Classic test number
+      /^9876543210$/,     // Another test number
+    ];
+    
+    return !invalidPatterns.some(pattern => pattern.test(cleaned));
   };
 
   const handleSubmit = async () => {
@@ -57,7 +81,15 @@ const App = () => {
       setLoading(false);
       return;
     }
-    const normalizedName = formData.name.trim().replace(/\s+/g, ' '); // Remove extra spaces and normalize spaces between words
+
+    // Enhanced phone number validation
+    if (!isValidPhoneNumber(phoneNumber)) {
+      alert('Please enter a valid phone number. Numbers like 0000000000, 1111111111, or numbers starting with 0 or 1 are not allowed.');
+      setLoading(false);
+      return;
+    }
+
+    const normalizedName = formData.name.trim().replace(/\s+/g, ' ');
 
     // Check for duplicate entry - case insensitive name comparison
     const { data: existingDonors } = await supabase
@@ -78,7 +110,7 @@ const App = () => {
 
     // Prepare data for Supabase
     const donorData = {
-      name: normalizedName, // Store the normalized name
+      name: normalizedName,
       blood_type: formData.blood_type,
       phone_number: phoneNumber,
       address: formData.address,
@@ -183,7 +215,7 @@ const App = () => {
           {/* Topbar */}
           <Topbar
             onSidebarOpen={() => setSidebarOpen(true)}
-            onDonorCountClick={() => setBigModalOpen(true)} // <-- Pass open handler
+            onDonorCountClick={() => setBigModalOpen(true)}
           />
           {/* Main Area */}
           <main className="flex-1 overflow-x-hidden overflow-y-auto bg-orange-100">
