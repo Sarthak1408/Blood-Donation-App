@@ -13,7 +13,7 @@ import BigDisplayModal from './components/BigDisplayModal';
 
 const sidebarItems = [
   { id: 'dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-  { id: 'add-donor', icon: UserPlus, label: 'Add Donor' },
+  // { id: 'add-donor', icon: UserPlus, label: 'Add Donor' },
   { id: 'donor-list', icon: Users, label: 'Donor List' },
   // { id: 'settings', icon: SettingsIcon, label: 'Settings' }
 ];
