@@ -15,7 +15,7 @@ const DonorList = () => {
       const { data, error } = await supabase
         .from("donors")
         .select("*")
-        .order("created_at", { ascending: false });
+        .order("created_at", { ascending: true });
       if (error) {
         console.error("Error fetching donors:", error);
         return;
@@ -90,6 +90,10 @@ const DonorList = () => {
           <table className="w-full table-auto rounded-xl overflow-hidden">
             <thead className="bg-orange-100/80 sticky top-0 z-10">
               <tr>
+                {/* S. No: new column */}
+                <th className="w-14 px-2 py-3 text-center text-sm font-mono font-extrabold text-orange-800 uppercase tracking-wider border-b border-orange-200 bg-orange-100/80">
+                  S. No
+                </th>
                 {/* Name: always visible */}
                 <th className="px-2 sm:px-4 md:px-6 py-3 text-left text-sm font-mono font-extrabold text-orange-800 uppercase tracking-wider border-b border-orange-200 bg-orange-100/80">
                   Name
@@ -128,71 +132,78 @@ const DonorList = () => {
               {filteredDonors.length === 0 ? (
                 <tr>
                   <td
-                    colSpan={8}
+                    colSpan={9}
                     className="text-center py-10 text-gray-400 text-base font-medium"
                   >
                     No donors found.
                   </td>
                 </tr>
               ) : (
-                filteredDonors.map((donor, idx) => (
-                  <tr
-                    key={donor.id}
-                    className={`transition-all duration-150 border-b border-orange-200 last:border-0 ${
-                      donor.isFirstTime
-                        ? "bg-sky-100 hover:bg-sky-200 font-medium border-l-4 border-l-sky-400"
-                        : idx % 2 === 0
-                        ? "bg-white/80 hover:shadow-md hover:scale-[1.01] hover:bg-orange-50"
-                        : "bg-orange-50/50 hover:shadow-md hover:scale-[1.01] hover:bg-orange-100/50"
-                    }`}
-                    style={{ boxShadow: "0 1px 4px 0 rgba(234,88,12,0.03)" }}
-                  >
-                    {/* Name: always visible */}
-                    <td className="px-2 sm:px-4 md:px-6 py-4 whitespace-nowrap rounded-l-lg">
-                      <div className="text-base font-mono font-semibold text-orange-900 capitalize">
-                        {donor.name}
-                      </div>
-                    </td>
-                    {/* Gender: hidden on portrait, visible on landscape and up */}
-                    <td className="hidden sm:table-cell px-2 sm:px-4 md:px-6 py-4 whitespace-nowrap font-mono font-semibold text-base text-orange-800 capitalize">
-                      {donor.gender}
-                    </td>
-                    {/* Blood Type: always visible */}
-                    <td className="px-2 sm:px-4 md:px-6 py-4 whitespace-nowrap text-base font-mono font-extrabold text-orange-700">
-                      {donor.blood_type}
-                    </td>
-                    {/* City: always visible */}
-                    <td className="px-2 sm:px-4 md:px-6 py-4 whitespace-nowrap font-mono font-semibold capitalize text-base text-orange-800">
-                      {donor.city}
-                    </td>
-                    {/* Address: hidden on portrait, visible on landscape and up */}
-                    <td className="hidden sm:table-cell px-2 sm:px-4 md:px-6 py-4 whitespace-nowrap font-mono font-semibold capitalize text-base text-orange-800">
-                      {donor.address}
-                    </td>
-                    {/* Contact: hidden on portrait, visible on landscape and up */}
-                    <td className="hidden sm:table-cell px-2 sm:px-4 md:px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center text-base font-mono font-semibold text-orange-900">
-                        <Phone className="w-4 h-4 mr-1 text-orange-500" />
-                        {donor.phone_number}
-                      </div>
-                    </td>
-                    {/* Dikshit: hidden on portrait, visible on landscape and up */}
-                    <td className="hidden sm:table-cell px-2 sm:px-4 md:px-6 py-4 whitespace-nowrap text-center text-base">
-                      {donor.isDikshit ? "☑️" : ""}
-                    </td>
-                    {/* Time: hidden on portrait, visible on landscape and up */}
-                    <td className="hidden sm:table-cell px-2 sm:px-4 md:px-6 py-4 whitespace-nowrap text-xs font-mono text-black-500 rounded-r-lg">
-                      {donor.created_at
-                        ? new Date(donor.created_at).toLocaleString("en-IN", {
-                            timeZone: "Asia/Kolkata",
-                            hour: "2-digit",
-                            minute: "2-digit",
-                            hour12: true,
-                          })
-                        : ""}
-                    </td>
-                  </tr>
-                ))
+                [...filteredDonors].reverse().map((donor) => {
+                  const sno = donors.findIndex(d => d.id === donor.id) + 1;
+                  return (
+                    <tr
+                      key={donor.id}
+                      className={`transition-all duration-150 border-b border-orange-200 last:border-0 ${
+                        donor.isFirstTime
+                          ? "bg-sky-100 hover:bg-sky-200 font-medium border-l-4 border-l-sky-400"
+                          : sno % 2 === 1
+                          ? "bg-white/80 hover:shadow-md hover:scale-[1.01] hover:bg-orange-50"
+                          : "bg-orange-50/50 hover:shadow-md hover:scale-[1.01] hover:bg-orange-100/50"
+                      }`}
+                      style={{ boxShadow: "0 1px 4px 0 rgba(234,88,12,0.03)" }}
+                    >
+                      {/* S. No: new cell */}
+                      <td className="w-14 px-2 py-4 text-center font-mono font-extrabold text-orange-800">
+                        {sno}
+                      </td>
+                      {/* Name: always visible */}
+                      <td className="px-2 sm:px-4 md:px-6 py-4 whitespace-nowrap rounded-l-lg">
+                        <div className="text-base font-mono font-semibold text-orange-900 capitalize">
+                          {donor.name}
+                        </div>
+                      </td>
+                      {/* Gender: hidden on portrait, visible on landscape and up */}
+                      <td className="hidden sm:table-cell px-2 sm:px-4 md:px-6 py-4 whitespace-nowrap font-mono font-semibold text-base text-orange-800 capitalize">
+                        {donor.gender}
+                      </td>
+                      {/* Blood Type: always visible */}
+                      <td className="px-2 sm:px-4 md:px-6 py-4 whitespace-nowrap text-base font-mono font-extrabold text-orange-700">
+                        {donor.blood_type}
+                      </td>
+                      {/* City: always visible */}
+                      <td className="px-2 sm:px-4 md:px-6 py-4 whitespace-nowrap font-mono font-semibold capitalize text-base text-orange-800">
+                        {donor.city}
+                      </td>
+                      {/* Address: hidden on portrait, visible on landscape and up */}
+                      <td className="hidden sm:table-cell px-2 sm:px-4 md:px-6 py-4 whitespace-nowrap font-mono font-semibold capitalize text-base text-orange-800">
+                        {donor.address}
+                      </td>
+                      {/* Contact: hidden on portrait, visible on landscape and up */}
+                      <td className="hidden sm:table-cell px-2 sm:px-4 md:px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center text-base font-mono font-semibold text-orange-900">
+                          <Phone className="w-4 h-4 mr-1 text-orange-500" />
+                          {donor.phone_number}
+                        </div>
+                      </td>
+                      {/* Dikshit: hidden on portrait, visible on landscape and up */}
+                      <td className="hidden sm:table-cell px-2 sm:px-4 md:px-6 py-4 whitespace-nowrap text-center text-base">
+                        {donor.isDikshit ? "☑️" : ""}
+                      </td>
+                      {/* Time: hidden on portrait, visible on landscape and up */}
+                      <td className="hidden sm:table-cell px-2 sm:px-4 md:px-6 py-4 whitespace-nowrap text-xs font-mono text-black-500 rounded-r-lg">
+                        {donor.created_at
+                          ? new Date(donor.created_at).toLocaleString("en-IN", {
+                              timeZone: "Asia/Kolkata",
+                              hour: "2-digit",
+                              minute: "2-digit",
+                              hour12: true,
+                            })
+                          : ""}
+                      </td>
+                    </tr>
+                  )
+                })
               )}
             </tbody>
           </table>
