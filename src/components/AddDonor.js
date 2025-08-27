@@ -136,7 +136,7 @@ const AddDonor = ({ formData, handleInputChange, handleSubmit, loading }) => {
             {/* Full Name */}
             <div>
               <label className="block text-sm font-mono font-semibold text-orange-900 mb-2">
-                Full Name<span className="text-orange-500">*</span>
+                Full Name <span className="text-orange-500">*</span>
               </label>
               <input
                 type="text"
@@ -308,7 +308,7 @@ const AddDonor = ({ formData, handleInputChange, handleSubmit, loading }) => {
                   className="w-5 h-5 text-orange-600 focus:ring-orange-400 border-orange-300 rounded-lg"
                 />
                 <label className="ml-2 text-base font-mono font-semibold text-orange-900">
-                  Dikshit with us
+                  Dikshit
                 </label>
               </div>
             </div>
