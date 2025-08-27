@@ -212,7 +212,7 @@ const BigDisplayModal = ({ open, onClose, stats, donors }) => {
                             {donor.name}
                           </div>
                           <div className="text-xs sm:text-sm capitalize text-green-200 mt-1 font-sans">
-                            📍 {donor.address}
+                            📍 {donor.city}
                           </div>
                           <div className="text-xs sm:text-sm text-red-300 font-semibold mt-1 flex items-center gap-1 sm:gap-2 font-sans">
                             <span className="text-red-400">🩸</span>
