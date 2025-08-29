@@ -47,14 +47,14 @@ const Settings = () => {
     URL.revokeObjectURL(url);
   };
 
-  // Generate PDF: Camp details + donor list
+  // Generate PDF: Camp details + donor list (with serial, contact, city)
   const handleDownloadCampDetails = async () => {
     try {
-      // Fetch donors – adjust column names if your schema differs
+      // Fetch donors in order of addition (oldest first)
       const { data: donors, error } = await supabase
         .from('donors')
-        .select('name, gender, blood_type, address')
-        .order('name', { ascending: true });
+        .select('name, gender, blood_type, phone_number, city, address')
+        .order('created_at', { ascending: true });
 
       if (error) {
         alert('Failed to fetch donors: ' + error.message);
@@ -88,25 +88,31 @@ const Settings = () => {
         y += wrapped.length * 6 + 4;
       }
 
-      // Donor table
+      // Donor table with serial, contact, city
       if (donors && donors.length) {
-        const rows = donors.map(d => [
+        const rows = donors.map((d, i) => [
+          i + 1,
           d?.name ?? '',
           d?.gender ?? '',
           d?.blood_type ?? '',
+          d?.phone_number ?? '',
+          d?.city ?? '',
           d?.address ?? '',
         ]);
         autoTable(doc, {
           startY: y,
-          head: [['Name', 'Gender', 'Blood Type', 'Address']],
+          head: [['S.No.', 'Name', 'Gender', 'Blood Type', 'Contact', 'City', 'Address']],
           body: rows,
           styles: { fontSize: 10 },
           headStyles: { fillColor: [239, 68, 68] }, // "blood red"
           columnStyles: {
-            0: { cellWidth: 40 }, // name
-            1: { cellWidth: 25 }, // gender
-            2: { cellWidth: 25 }, // blood type
-            3: { cellWidth: 60 }, // address (wider)
+            0: { cellWidth: 12 }, // S.No.
+            1: { cellWidth: 32 }, // Name
+            2: { cellWidth: 18 }, // Gender
+            3: { cellWidth: 22 }, // Blood Type
+            4: { cellWidth: 28 }, // Contact
+            5: { cellWidth: 28 }, // City
+            6: { cellWidth: 50 }, // Address
           },
         });
       } else {
@@ -143,7 +149,6 @@ const Settings = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Camp Information */}
-                    {/* Camp Info Form */}
           <div className="bg-gradient-to-br from-orange-200 to-orange-300 rounded-xl shadow-lg p-6 border border-orange-300 hover:shadow-xl transition-shadow duration-200 mb-6">
             <h3 className="text-xl font-mono font-bold text-center text-orange-900 mb-4">Camp Information</h3>
             <div className="space-y-4">
