@@ -1,21 +1,21 @@
 import React from 'react';
 import './App.css';
-import Sidebar from './components/Sidebar';
-import Topbar from './components/Topbar';
-import Dashboard from './components/Dashboard';
-import AddDonor from './components/AddDonor';
-import DonorList from './components/DonorList';
-import Settings from './components/Settings';
-import { supabase } from './supabaseClient';
-import ErrorBoundary from './components/ErrorBoundary';
-import BigDisplayModal from './components/BigDisplayModal';
+// import Sidebar from './components/Sidebar';
+// import Topbar from './components/Topbar';
+// import Dashboard from './components/Dashboard';
+// import AddDonor from './components/AddDonor';
+// import DonorList from './components/DonorList';
+// import Settings from './components/Settings';
+// import { supabase } from './supabaseClient';
+// import ErrorBoundary from './components/ErrorBoundary';
+// import BigDisplayModal from './components/BigDisplayModal';
 
-const sidebarItems = [
-  { id: 'dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-  { id: 'add-donor', icon: UserPlus, label: 'Add Donor' },
-  { id: 'donor-list', icon: Users, label: 'Donor List' },
-  // { id: 'settings', icon: SettingsIcon, label: 'Settings' }
-];
+// const sidebarItems = [
+//   { id: 'dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+//   { id: 'add-donor', icon: UserPlus, label: 'Add Donor' },
+//   { id: 'donor-list', icon: Users, label: 'Donor List' },
+//   // { id: 'settings', icon: SettingsIcon, label: 'Settings' }
+// ];
 
 const App = () => {
   return (
